@@ -106,6 +106,8 @@ def remove_player(df):
 def save_df(df, filename="player_comparison.pkl"):
     if args.saveas is not None:
         filename = args.saveas
+    elif args.load is not None:
+        filename = args.load
     df.to_pickle(filename)
 
 
@@ -113,7 +115,7 @@ def save_df(df, filename="player_comparison.pkl"):
 if args.load is not None:
     df = pd.read_pickle(args.load)
     if args.save:
-        save_df(df)
+        save_df(df, args.load)
 
 if args.compare:
     df = compare_players()
