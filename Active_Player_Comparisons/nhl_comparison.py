@@ -26,7 +26,9 @@ args = parser.parse_args()
 def player_stats(p):
     # search for the players player code
     player = get(
-        "https://suggest.svc.nhl.com/svc/suggest/v1/minactiveplayers/" + p + "/99999"
+        "https://suggest.svc.nhl.com/svc/suggest/v1/minactiveplayers/"
+        + p
+        + "/99999"
     )
     player_data = json.loads(player.text)
     print(player_data)
@@ -64,7 +66,9 @@ def player_stats(p):
     df_season = df_season.rename({0: "season"}, axis="columns")
     df_season = pd.to_numeric(df_season["season"])
 
-    result = pd.concat([df_season, df_league, df_team, df_stats], axis=1, sort=False)
+    result = pd.concat(
+        [df_season, df_league, df_team, df_stats], axis=1, sort=False
+    )
 
     result = result.loc[result["league"] == "National Hockey League"]
 
@@ -86,7 +90,12 @@ def visualize_comp(df):
     i = 0
     for label, group in df.groupby("Player"):
         group.plot(
-            x="season", y=y, title="Comparing " + y, ax=ax, label=label, color=cycle[i]
+            x="season",
+            y=y,
+            title="Comparing " + y,
+            ax=ax,
+            label=label,
+            color=cycle[i],
         )
 
         mean_val = round(group[y].mean(), 2)
@@ -147,7 +156,9 @@ def remove_player(df):
 def save_df(df, filename="player_comparison.pkl"):
     if args.saveas is not None:
         filename = args.saveas
-    elif args.load is not None:  # allows for the user not to have to put a new name in
+    elif (
+        args.load is not None
+    ):  # allows for the user not to have to put a new name in
         filename = args.load
     df.to_pickle(filename)
 
