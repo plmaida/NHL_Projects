@@ -8,3 +8,4 @@ This folder allows for the user to input active players and compare their stats 
         - argparser          
         - matplotlib        
         - proper use of defining functions      
+        - pickle    
