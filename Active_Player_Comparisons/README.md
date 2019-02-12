@@ -1,9 +1,8 @@
 # NHL Project - Compare Active Players 
 
-## Playing with Pandas
+## Playing with Pandas - Overview
 
-## Overview
-The first work done was completing a comparison between players. One of the difficulties of using this API is that there doesn't seem to be a way of getting PlayerIDs easily. 
+This first project was just a method to practice using pandas on real data. The work done was completing a comparison between nhl players. One of the difficulties of using this API is that there doesn't seem to be a way of getting PlayerIDs easily. The method used to pull is shown in "Adding and Comparing". 
 
 ## Parser
 Using argparser we can add different arguments. They are the following:  
@@ -27,6 +26,9 @@ The process therefore asks the user to input a player name. Input the last name 
 
 ## Removing
 Because the player name is saved into the dataframe, we simply input the name of the player, the player code is not needed to remove the player. 
+
+## Saving and Loading
+Pickle was used to save and load the dataframes. 
 
 ## Visualize
 An example of a graph that shows Points/Game is shown here:
