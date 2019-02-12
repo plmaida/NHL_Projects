@@ -1,4 +1,6 @@
-# NHL API - Playing with Pandas
+# NHL Project - Compare Active Players 
+
+## Playing with Pandas
 
 ## Overview
 The first work done was completing a comparison between players. One of the difficulties of using this API is that there doesn't seem to be a way of getting PlayerIDs easily. 
