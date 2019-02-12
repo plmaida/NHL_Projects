@@ -9,9 +9,18 @@ import json
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import argparse
+import pickle
 
-
-# In[118]:
+parser = argparse.ArgumentParser()
+parser.add_argument('--compare', type=eval, default=False)
+parser.add_argument('--visualize', type=eval, default=False)
+parser.add_argument('--add', type=int, default=None)
+parser.add_argument('--remove', type=int, default=None)
+parser.add_argument('--save', type=eval, default=False)
+parser.add_argument('--saveas', type=str, default=None)
+parser.add_argument('--load', type=str, default=None)
+args = parser.parse_args()
 
 
 def player_stats(p):
@@ -43,7 +52,7 @@ def player_stats(p):
     result = pd.concat([df_season, df_league, df_team, df_stats], axis=1, sort=False)
 
     result = result.loc[result['league'] == "National Hockey League"]
-    
+
     result['Points/Game'] = result['points']/result['games']
     result['Player'] = p
     return(result)
@@ -55,15 +64,16 @@ def visualize_comp(df):
     cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
     i = 0
     for label, group in df.groupby('Player'):
-       
+
         group.plot(x='season', y=y, title="Comparing "+y, ax=ax, label=label, color=cycle[i])
-        mean_val = group[y].mean()
+        mean_val = round(group[y].mean(), 2)
         print(mean_val)
-        ax.annotate(label, xy=(group['season'].iloc[1], mean_val), xytext=(group['season'].iloc[2], mean_val*1.1), 
+        ax.annotate(mean_val, xy=(group['season'].iloc[1], mean_val), xytext=(group['season'].iloc[2], mean_val*1.1),
                     arrowprops=dict(facecolor=cycle[i], shrink=0.05))
         # vertical dotted line originating at mean value
         plt.axhline(mean_val, linestyle='dashed', linewidth=2, color=cycle[i])
         i+=1
+    plt.savefig('./comparison.png')
 
 def compare_players():
     num_players = input('How many players do you want to look at: ')
@@ -73,66 +83,48 @@ def compare_players():
         pp = player_stats(p)
         appended_data.append(pp)
     df_comp = pd.concat(appended_data, axis=0)
-    #df_comp.set_index('season', inplace=True)
     visualize_comp(df_comp)
+    if args.save or args.saveas is not None:
+        save_df(df_comp)
     return df_comp
 
 def add_player(df):
     p = input("which player do you want to look at: ")
     pp = player_stats(p)
     df = pd.concat([df, pp], axis=0)
+    if args.save or args.saveas is not None:
+        save_df(df)
     return df
 
 def remove_player(df):
     p = input("which player do you want to remove: ")
     df = df[df.Player != p]
+    if args.save or args.saveas is not None:
+        save_df(df)
     return df
 
-
-# In[119]:
-
-
-x = compare_players()
-
-
-# In[77]:
+def save_df(df, filename="player_comparison.pkl"):
+    if args.saveas is not None:
+        filename = args.saveas
+    df.to_pickle(filename)
 
 
-x
 
+if args.load is not None:
+    df = pd.read_pickle(args.load)
+    if args.save:
+        save_df(df)
 
-# In[87]:
+if args.compare:
+    df = compare_players()
 
+if args.visualize:
+    visualize_comp(df)
 
-visualize_comp(x)
+if args.add:
+    for i in range(args.add):
+        df = add_player(df)
 
-
-# In[86]:
-
-
-visualize_comp(x)
-
-
-# In[126]:
-
-
-x = add_player(x)
-
-
-# In[125]:
-
-
-x = remove_player(x)
-
-
-# In[110]:
-
-
-x
-
-
-# In[124]:
-
-
-visualize_comp(x)
-
+if args.remove:
+    for i in range(args.remove):
+        df = remove_player(df)
