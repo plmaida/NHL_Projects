@@ -26,7 +26,7 @@ The process therefore asks the user to input a player name. Input the last name 
 ## Removing
 Because the player name is saved into the dataframe, we simply input the name of the player, the player code is not needed to remove the player. 
 
-## Visualizing
+## Visualize
 An example of a graph that shows Points/Game is shown here:
 ![comparison](https://user-images.githubusercontent.com/38801847/52666990-b45aa400-2edd-11e9-850d-e001d1040bc9.png)
 
