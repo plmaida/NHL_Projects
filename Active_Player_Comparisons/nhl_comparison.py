@@ -1,8 +1,5 @@
 # coding: utf-8
 
-# In[117]:
-
-
 from requests import get
 import json
 import pandas as pd
@@ -22,7 +19,7 @@ parser.add_argument("--load", type=str, default=None)
 parser.add_argument("--players", type=eval, default=False)
 args = parser.parse_args()
 
-# -----------------------------------------------------------Create functions--------------------------------------------------------
+# -----------------------------Create functions-------------------------------
 def player_stats(p):
     # search for the players player code
     player = get(
@@ -156,9 +153,8 @@ def remove_player(df):
 def save_df(df, filename="player_comparison.pkl"):
     if args.saveas is not None:
         filename = args.saveas
-    elif (
-        args.load is not None
-    ):  # allows for the user not to have to put a new name in
+    elif (args.load is not None):
+        # allows for the user not to have to put a new name in
         filename = args.load
     df.to_pickle(filename)
 
@@ -167,7 +163,7 @@ def list_names(df):
     print(df["Player"].unique())
 
 
-# -----------------------------------------------------Use the parser arguments-----------------------------------------------------------
+# ----------------------Use the parser arguments------------------------------
 if args.load is not None:
     df = pd.read_pickle(args.load)
     if args.save:
