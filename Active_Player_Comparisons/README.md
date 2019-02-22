@@ -2,7 +2,7 @@
 
 ## Playing with Pandas - Overview
 
-This first project was just a method to practice using pandas on real data. The work done was completing a comparison between nhl players. One of the difficulties of using this API is that there doesn't seem to be a way of getting PlayerIDs easily. The method used to pull is shown in "Adding and Comparing". 
+This first project was a method to practice using pandas on real data. The work done was completing a comparison between nhl players. One of the difficulties of using this API is that there doesn't seem to be a way of getting PlayerIDs easily. The method used to pull is shown in "Adding and Comparing". 
 
 ## Parser
 Using argparser we can add different arguments. They are the following:  
